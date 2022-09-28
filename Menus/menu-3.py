@@ -24,10 +24,12 @@ def toggle_kismet():
         run_cmd(stop)
         return False
     else:
-	run_cmd(start)
+        run_cmd(start)
         return True
 
 # Toggle OpenVAS
+
+
 def toggle_openvas():
     check = "/usr/sbin/service openvas-manager status"
     start = "/usr/bin/openvas-start"
@@ -37,10 +39,12 @@ def toggle_openvas():
         run_cmd(stop)
         return False
     else:
-	run_cmd(start)
+        run_cmd(start)
         return True
 
 # Toggle snort
+
+
 def toggle_snort():
     try:
         status = run_cmd("/usr/sbin/service snortbarn status")
@@ -57,14 +61,16 @@ def toggle_snort():
 
 # Check msf session status
 def check_msf():
-    if 'SCREEN -R -S msf' in commands.getoutput('/bin/ps -ef'):
+    if 'SCREEN -R -S msf' in subprocess.getoutput('/bin/ps -ef'):
         return True
     else:
         return False
 
 # Check kismet session status
+
+
 def check_kismet():
-    if 'SCREEN -R -S kismet' in commands.getoutput('/bin/ps -ef'):
+    if 'SCREEN -R -S kismet' in subprocess.getoutput('/bin/ps -ef'):
         return True
     else:
         return False
@@ -78,16 +84,26 @@ def check_kismet():
 ##        Buttons          ##
 
 # define all of the buttons
-titleButton = Button("                        Misc Tools", originX, originX, buttonHeight, buttonWidth * 3 + spacing * 2, tron_blu, tron_ora, titleFont)
-button1 = Button(labelPadding * " " + "  Metasploit", originX, originY, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
-button2 = Button(labelPadding * " " + "  SDR-Scan", originX + buttonWidth + spacing, originY, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
-button3 = Button(labelPadding * " " + "     Kismet", originX + (buttonWidth * 2) + (spacing * 2), originY, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
-button4 = Button(labelPadding * " " + "    OpenVAS", originX, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
-button5 = Button(labelPadding * " " + "      Snort", originX + buttonWidth + spacing, originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
-button6 = Button(labelPadding * " " + "  PulledPork", originX + (buttonWidth * 2) + (spacing * 2), originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
-button7 = Button(labelPadding * " " + "        <<<", originX, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
-button8 = Button(labelPadding * " " + " Screen Off", originX + buttonWidth + spacing, originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
-button9 = Button(labelPadding * " " + "        >>>", originX + (buttonWidth * 2) + (spacing * 2), originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+titleButton = Button("                        Misc Tools", originX, originX,
+                     buttonHeight, buttonWidth * 3 + spacing * 2, tron_blu, tron_ora, titleFont)
+button1 = Button(labelPadding * " " + "  Metasploit", originX,
+                 originY, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button2 = Button(labelPadding * " " + "  SDR-Scan", originX + buttonWidth +
+                 spacing, originY, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button3 = Button(labelPadding * " " + "     Kismet", originX + (buttonWidth * 2) +
+                 (spacing * 2), originY, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button4 = Button(labelPadding * " " + "    OpenVAS", originX, originY +
+                 buttonHeight + spacing, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button5 = Button(labelPadding * " " + "      Snort", originX + buttonWidth + spacing,
+                 originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button6 = Button(labelPadding * " " + "  PulledPork", originX + (buttonWidth * 2) + (spacing * 2),
+                 originY + buttonHeight + spacing, buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button7 = Button(labelPadding * " " + "        <<<", originX, originY + (buttonHeight * 2) +
+                 (spacing * 2), buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button8 = Button(labelPadding * " " + " Screen Off", originX + buttonWidth + spacing, originY +
+                 (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
+button9 = Button(labelPadding * " " + "        >>>", originX + (buttonWidth * 2) + (spacing * 2),
+                 originY + (buttonHeight * 2) + (spacing * 2), buttonHeight, buttonWidth, tron_blu, tron_whi, labelFont)
 
 
 # Define each button press action
@@ -97,24 +113,26 @@ def button(number):
         if button1.disable == 1:
             return
 
-	# Metasploit
-        process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
+        # Metasploit
+        process = subprocess.call(
+            "setterm -term linux -back default -fore white -clear all", shell=True)
         pygame.quit()
-        kalipi.run_cmd("/usr/bin/sudo -u " + KPUSER + " screen -R -S msf msfconsole")
-        process = subprocess.call("setterm -term linux -back default -fore black -clear all", shell=True)
+        kalipi.run_cmd("/usr/bin/sudo -u " + KPUSER +
+                       " screen -R -S msf msfconsole")
+        process = subprocess.call(
+            "setterm -term linux -back default -fore black -clear all", shell=True)
         os.execv(__file__, sys.argv)
 
         if check_msf():
-                button1.fntColor = green
-                button1.draw()
-                pygame.display.update()
+            button1.fntColor = green
+            button1.draw()
+            pygame.display.update()
 
         else:
-                button1.fntColor = tron_whi
-                button1.draw()
-                pygame.display.update()
+            button1.fntColor = tron_whi
+            button1.draw()
+            pygame.display.update()
         return
-
 
     if number == 2:
         if button2.disable == 1:
@@ -122,7 +140,8 @@ def button(number):
 
         # SDR-Scanner
         pygame.quit()
-        prog="/bin/bash " + os.environ["MENUDIR"] + "/SDR-Scanner/sdr-scanner.sh"
+        prog = "/bin/bash " + \
+            os.environ["MENUDIR"] + "/SDR-Scanner/sdr-scanner.sh"
         kalipi.run_cmd(prog)
         os.execv(__file__, sys.argv)
 
@@ -132,48 +151,51 @@ def button(number):
 
         # Kismet
         if kismetver == 1:
-            process = subprocess.call("setterm -term linux -back default -fore white -clear all", shell=True)
+            process = subprocess.call(
+                "setterm -term linux -back default -fore white -clear all", shell=True)
             pygame.quit()
-            kalipi.run_cmd("/usr/bin/sudo -u " + KPUSER + " screen -R -S kismet /usr/bin/kismet")
-            process = subprocess.call("setterm -term linux -back default -fore black -clear all", shell=True)
+            kalipi.run_cmd("/usr/bin/sudo -u " + KPUSER +
+                           " screen -R -S kismet /usr/bin/kismet")
+            process = subprocess.call(
+                "setterm -term linux -back default -fore black -clear all", shell=True)
             os.execv(__file__, sys.argv)
 
             if check_kismet():
-                    button3.fntColor = green
-                    button3.draw()
-                    pygame.display.update()
+                button3.fntColor = green
+                button3.draw()
+                pygame.display.update()
 
             else:
-                    button3.fntColor = tron_whi
-                    button3.draw()
-                    pygame.display.update()
+                button3.fntColor = tron_whi
+                button3.draw()
+                pygame.display.update()
             return
-        else: # Kismet github version
+        else:  # Kismet github version
             if toggle_kismet():
-                    button3.fntColor = green
-                    button3.draw()
-                    pygame.display.update()
+                button3.fntColor = green
+                button3.draw()
+                pygame.display.update()
 
             else:
-                    button3.fntColor = tron_whi
-                    button3.draw()
-                    pygame.display.update()
+                button3.fntColor = tron_whi
+                button3.draw()
+                pygame.display.update()
             return
 
     if number == 4:
         if button4.disable == 1:
             return
 
-	# OpenVAS
+        # OpenVAS
         if toggle_openvas():
-                button4.fntColor = green
-                button4.draw()
-                pygame.display.update()
+            button4.fntColor = green
+            button4.draw()
+            pygame.display.update()
 
         else:
-                button4.fntColor = tron_whi
-                button4.draw()
-                pygame.display.update()
+            button4.fntColor = tron_whi
+            button4.draw()
+            pygame.display.update()
         return
 
     if number == 5:
@@ -182,14 +204,14 @@ def button(number):
 
         # Snort
         if toggle_snort():
-                button5.fntColor = green
-                button5.draw()
-                pygame.display.update()
+            button5.fntColor = green
+            button5.draw()
+            pygame.display.update()
 
         else:
-                button5.fntColor = tron_whi
-                button5.draw()
-                pygame.display.update()
+            button5.fntColor = tron_whi
+            button5.draw()
+            pygame.display.update()
         return
 
     if number == 6:
@@ -197,9 +219,10 @@ def button(number):
             return
 
         # Pulledpork
-	pygame.quit()
-	cmd="/usr/bin/sudo /bin/bash " + os.environ["MENUDIR"] + "pulledpork.sh"
-	call(cmd, shell=True)
+        pygame.quit()
+        cmd = "/usr/bin/sudo /bin/bash " + \
+            os.environ["MENUDIR"] + "pulledpork.sh"
+        call(cmd, shell=True)
         os.execv(__file__, sys.argv)
 
     if number == 7:
@@ -208,7 +231,7 @@ def button(number):
 
         # Previous page
         pygame.quit()
-        page=os.environ["MENUDIR"] + "menu-2.py"
+        page = os.environ["MENUDIR"] + "menu-2.py"
         os.execvp("python", ["python", page])
         sys.exit()
 
@@ -217,7 +240,7 @@ def button(number):
             return
 
         # Screen off
-        retPage="menu-3.py"
+        retPage = "menu-3.py"
         kalipi.screensaver(retPage)
         menu3()
 
@@ -227,7 +250,7 @@ def button(number):
 
         # Next page
         pygame.quit()
-        page=os.environ["MENUDIR"] + "menu-4.py"
+        page = os.environ["MENUDIR"] + "menu-4.py"
         os.execvp("python", ["python", page])
         sys.exit()
 
@@ -335,7 +358,6 @@ def menu3():
         # Add button launch code here
         button6.draw()
 
-
     # Third Row
     # Button 7
     button7.disable = 0  # "1" disables button
@@ -367,16 +389,16 @@ def menu3():
     ##        Buttons          ##
     #############################
 
-
     #############################
     ##        Input loop       ##
 
     while 1:
-        butNo=kalipi.inputLoop("menu-3.py")
+        butNo = kalipi.inputLoop("menu-3.py")
         button(butNo)
 
     ##        Input loop       ##
     #############################
+
 
 if __name__ == "__main__":
     menu3()

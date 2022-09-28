@@ -16,7 +16,7 @@ export KPTIMEOUT=99          ## Minutes before screensaver kicks in, comment out
 ## End adjustments
 
 export TFT=0                ## Set to 1 for TFT output, 0 for X Window
-export MENUDIR="/home/pi/Kali-Pi/Menus/"
+export MENUDIR=`dirname "$0"`/Menus/
 while true; do
 ## Loop to make it a bit more difficult to bypass PIN
 
@@ -25,11 +25,11 @@ setterm -term linux -back default -fore white -clear all
     if [ $KPPIN == "1" ]; then
         startpage="menu-pin.py menu-1.py"
         /usr/bin/clear
-        /usr/bin/env python $MENUDIR$startpage
+        /usr/bin/env python3 $MENUDIR$startpage
     else
         startpage="menu-1.py"
         /usr/bin/clear
-        /usr/bin/env python $MENUDIR$startpage
+        /usr/bin/env python3 $MENUDIR$startpage
     fi
 
     if [ $? -eq 37 ]; then

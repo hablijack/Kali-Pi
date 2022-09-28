@@ -47,12 +47,12 @@ while true; do
     if [ $KPPIN == "1" ]; then
         startpage="menu-pin.py menu-1.py"
         /usr/bin/clear
-        /usr/bin/env python $MENUDIR$startpage
+        /usr/bin/env python3 $MENUDIR$startpage
     else
         startpage="menu-1.py"
         /usr/bin/clear
-        /bin/bash $MENUDIR/launch-bg.sh
-        /usr/bin/env python $MENUDIR$startpage
+        # /bin/bash $MENUDIR/launch-bg.sh
+        /usr/bin/env python3 $MENUDIR$startpage
     fi
 
  ##   if [ $? -eq 37 ]; then
